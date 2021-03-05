@@ -13,10 +13,12 @@ const handleSubmit = (evt) => {
   evt.preventDefault();
   const message = document.getElementById("message");
   const autor = document.getElementById("autor");
-  var x = {"author": autor.value, "Message" : message.value}
+  const ts = document.getElementById("ts");
+  var x = {"author": autor.value, "Message" : message.value, "ts":ts.value}
   ws.send(JSON.stringify(x));
   message.value = "";
   autor.value = "";
+  ts.value = "";
 };
 
 const form = document.getElementById("form");

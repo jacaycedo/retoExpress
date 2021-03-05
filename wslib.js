@@ -1,6 +1,6 @@
 const WebSocket = require("ws");
 const fs = require('fs')
-
+const Mensaje = require('./models/mensaje')
 const clients = [];
 const messages = [];
 
@@ -14,14 +14,9 @@ const wsConnection = (server) => {
     ws.on("message", (message) => {
       messages.push(message);
       x = JSON.parse(message);
-      fs.readFile("./mensajesHistoricos.json", function (err, data) {
-        var json = JSON.parse(data);
-        json.push(x);    
-        fs.writeFile("./mensajesHistoricos.json", JSON.stringify(json), function(err){
-          if (err) throw err;
-        });
-    })
-
+      Mensaje.create( { Message: x.Message, author:x.author, ts:x.ts }).then((result)=>{
+        console.log(result)
+    });
       sendMessages();
     });
   });
